@@ -8,6 +8,12 @@ output: github_document
 
 library(tidyverse)
 library(ggridges)
+
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
 ```
 
 Load a dataset that we will use.
@@ -153,7 +159,15 @@ weather_df %>%
 ## compare more than 20 cities 
 ```
 
-
+## embedding plots
 ```{r}
+weather_df %>%
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point(alpha = .3)
+```
 
+```{r, fig.width = 12}
+weather_df %>%
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point(alpha = .3)
 ```

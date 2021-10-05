@@ -20,6 +20,12 @@ library(tidyverse)
 
 ``` r
 library(ggridges)
+
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
 ```
 
 Load a dataset that we will use.
@@ -76,7 +82,7 @@ weather_df %>%
 
     ## Warning: Removed 15 rows containing missing values (geom_point).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-3-1.png" width="90%" />
 
 you can save ggplots
 
@@ -91,7 +97,7 @@ ggp_tmax_tmin
 
     ## Warning: Removed 15 rows containing missing values (geom_point).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-4-1.png" width="90%" />
 
 ## Let’s fancy it up
 
@@ -105,7 +111,7 @@ add … color? lines? other stuff?
 
     ## Warning: Removed 15 rows containing missing values (geom_point).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-5-1.png" width="90%" />
 
 ``` r
   weather_df %>%
@@ -121,7 +127,7 @@ add … color? lines? other stuff?
 
     ## Warning: Removed 15 rows containing missing values (geom_point).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-6-1.png" width="90%" />
 
 let’s make one more scatterplot.
 
@@ -139,7 +145,7 @@ weather_df %>%
 
     ## Warning: Removed 3 rows containing missing values (geom_point).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-7-1.png" width="90%" />
 
 ## use data manipulation as part of this
 
@@ -154,7 +160,7 @@ weather_df %>%
   geom_point()
 ```
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-8-1.png" width="90%" />
 
 \#\#stacking
 
@@ -168,7 +174,7 @@ weather_df %>%
 
     ## Warning: Removed 3 rows containing non-finite values (stat_smooth).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-9-1.png" width="90%" />
 
 ``` r
 ggplot(weather_df, aes(x = tmax, y = tmin)) + 
@@ -177,7 +183,7 @@ ggplot(weather_df, aes(x = tmax, y = tmin)) +
 
     ## Warning: Removed 15 rows containing non-finite values (stat_binhex).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-10-1.png" width="90%" />
 
 ## univariate plots
 
@@ -192,7 +198,7 @@ weather_df %>%
 
     ## Warning: Removed 3 rows containing non-finite values (stat_bin).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-11-1.png" width="90%" />
 
 lets try other plots.
 
@@ -204,7 +210,7 @@ weather_df %>%
 
     ## Warning: Removed 3 rows containing non-finite values (stat_density).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-12-1.png" width="90%" />
 
 still with ‘tamx’ and ‘name’
 
@@ -216,7 +222,7 @@ weather_df %>%
 
     ## Warning: Removed 3 rows containing non-finite values (stat_boxplot).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-13-1.png" width="90%" />
 
 some people like violin box??
 
@@ -228,7 +234,7 @@ weather_df %>%
 
     ## Warning: Removed 3 rows containing non-finite values (stat_ydensity).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-14-1.png" width="90%" />
 
 what about ridges …
 
@@ -242,8 +248,30 @@ weather_df %>%
 
     ## Warning: Removed 3 rows containing non-finite values (stat_density_ridges).
 
-![](viz_part1_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-15-1.png" width="90%" />
 
 ``` r
 ## compare more than 20 cities 
 ```
+
+## embedding plots
+
+``` r
+weather_df %>%
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point(alpha = .3)
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-16-1.png" width="90%" />
+
+``` r
+weather_df %>%
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point(alpha = .3)
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+<img src="viz_part1_files/figure-gfm/unnamed-chunk-17-1.png" width="90%" />
