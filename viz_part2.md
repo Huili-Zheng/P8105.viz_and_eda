@@ -298,3 +298,38 @@ tmax_date_p =
     ## Warning: Removed 3 rows containing missing values (geom_point).
 
 ![](viz_part2_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+## data manipulation
+
+Control the factors.
+
+``` r
+weather_df %>%
+  mutate(
+    name = factor(name),
+    name = forcats::fct_relevel(name, c("Waikiki_HA"))  ##Manipulate by the mean reorder 
+  ) %>%
+  ggplot(aes(x = name,  y = tmax, fill = name)) +
+  geom_violin(alpha = .5)
+```
+
+    ## Warning: Removed 3 rows containing non-finite values (stat_ydensity).
+
+![](viz_part2_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+what if i wanted densitites for tmin and tmax simultaneously?
+
+``` r
+weather_df  %>%
+  filter(name == "CentralPark_NY") %>%
+  pivot_longer(
+    tmax:tmin,
+    names_to = "observation",
+    values_to = "temperature"
+  ) %>%
+  ggplot(aes(x = temperature, fill = observation)) +
+  geom_density(alpha = .5) +
+  facet_grid(. ~name)
+```
+
+![](viz_part2_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
