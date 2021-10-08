@@ -1,5 +1,5 @@
 ---
-title: "viz_part1"
+title: "viz_part2"
 author: "Huili Zheng"
 date: "10/5/2021"
 output: github_document
@@ -7,13 +7,9 @@ output: github_document
 ```{r}
 
 library(tidyverse)
-library(ggridges)
+library(patchwork)
 
-knitr::opts_chunk$set(
-  fig.width = 6,
-  fig.asp = .6,
-  out.width = "90%"
-)
+
 ```
 
 Load a dataset that we will use.
@@ -37,137 +33,91 @@ weather_df =
 ```
 
 
-## scattterplot
+## remember this plot ...?
 
-tmax vs tmin
-
-```{r}
-weather_df %>%
-  ggplot(aes(x = tmin, y = tmax)) + 
-  geom_point()
-
-```
-
-
-
-you can save ggplots
-```{r}
-ggp_tmax_tmin = 
-  weather_df %>%
-  ggplot(aes(x = tmin, y = tmax)) + 
-  geom_point()
-
-ggp_tmax_tmin
-```
-
-
-## Let's fancy it up
-
-add ... color? lines? other stuff?
-
-```{r}
-  weather_df %>%
-  ggplot(aes(x = tmin, y = tmax,color = name)) + 
-  geom_point()
-```
-
-```{r}
-  weather_df %>%
-  ggplot(aes(x = tmin, y = tmax, color = name)) + 
-  geom_point(alpha = .3) +
-  geom_smooth(aes(color = NULL), se = FALSE) +   
-  facet_grid(. ~ name)        ## aes(color=null) exclude the set for all 
-```
-
-let's make one more scatterplot.
-```{r}
-weather_df %>%
-  ggplot(aes(x = date, y = tmax, size = prcp)) + 
-  geom_point(alpha = .3) +
-  facet_grid(. ~ name) +
-  geom_smooth(se = FALSE)
-```
-
-
-## use data manipulation as part of this
-
-```{r}
-weather_df %>%
-  filter(name == "CentralPark_NY") %>%
-  mutate(
-    tmax = tmax*(9 / 5) + 32,
-    tmin = tmin*(9 / 5) + 32
-  ) %>%
-  ggplot(aes(x = tmin, y = tmax)) +
-  geom_point()
-
-```
-
-##stacking
-```{r}
-
-weather_df %>%
-  ggplot(aes(x = date, y = tmax, color = name)) +
-  geom_smooth()
-```
-
-```{r}
-ggplot(weather_df, aes(x = tmax, y = tmin)) + 
-  geom_hex()
-```
-
-## univariate plots
-
-```{r}
-weather_df %>%
-  ggplot(aes(x = tmax, fill = name)) +
-  geom_histogram() +
-  facet_grid(. ~name)
-
-```
-
-lets try other plots.
-
-```{r}
-weather_df %>%
-  ggplot(aes(x = tmax, fill = name)) +
-  geom_density(alpha = .3)
-
-```
-
-still with 'tamx' and 'name'
-
-```{r}
-weather_df %>%
-  ggplot(aes(x = name, y = tmax)) + 
-  geom_boxplot()
-```
-
-some people like violin box??
-
-```{r}
-weather_df %>%
-  ggplot(aes(x = name, y = tmax)) + 
-  geom_violin()
-```
-
-what about ridges ...
-```{r}
-weather_df %>%
-  ggplot(aes(x = tmax, y = name)) +
-  geom_density_ridges(alpha = .8, scale = .8)
-## compare more than 20 cities 
-```
-
-## embedding plots
 ```{r}
 weather_df %>%
   ggplot(aes(x = tmin, y = tmax, color = name)) +
   geom_point(alpha = .3)
 ```
 
-```{r, fig.width = 12}
+
+## lables
+
+```{r}
 weather_df %>%
   ggplot(aes(x = tmin, y = tmax, color = name)) +
-  geom_point(alpha = .3)
+  geom_point(alpha = .3) +
+  labs(
+    title = "temperature plot",
+    x = "minimum daily temperature (C)",
+    y = "maximum daily temperature(C)",
+    caption = "data from noaa package; temperatures in 2017."
+  )
 ```
+
+## sclae
+start with the same plot; x and y scales.
+
+```{r}
+weather_df %>%
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point(alpha = .3) +
+  labs(
+    title = "temperature plot",
+    x = "minimum daily temperature (C)",
+    y = "maximum daily temperature(C)",
+    caption = "data from noaa package; temperatures in 2017."
+  ) +
+  scale_x_continuous(
+    breaks = c(-15, 0 ,15) ,
+    labels = c("-15 C","0","15C")
+  ) +
+  scale_y_continuous(
+    position = "right"
+  )
+```
+
+
+look at color sclales
+
+```{r}
+weather_df %>%
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point(alpha = .3) +
+  labs(
+    title = "temperature plot",
+    x = "minimum daily temperature (C)",
+    y = "maximum daily temperature(C)",
+    caption = "data from noaa package; temperatures in 2017."
+  ) +
+  scale_color_hue(
+    name = "Location",
+    h = c(100,300) )
+```
+
+
+
+
+```{r}
+weather_df %>%
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point(alpha = .3) +
+  labs(
+    title = "temperature plot",
+    x = "minimum daily temperature (C)",
+    y = "maximum daily temperature(C)",
+    caption = "data from noaa package; temperatures in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "Location",
+    discrete = TRUE)
+```
+
+
+
+
+
+
+
+
